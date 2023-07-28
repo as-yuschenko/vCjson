@@ -205,3 +205,14 @@ To copy node name or node data value, use methods:
 ```
 
 Be careful, the buffer size must be at least the data size + 1 byte. First use get_node_name_len or get_node_value_len to determine the size of the buffer.
+
+## Show info
+
+To show information about node, use methods:
+```cpp
+    /**Prints to console verbose information about node*/
+    void show_node_info();
+
+    /**Prints to console lite information about node*/
+    void show_node();
+```
