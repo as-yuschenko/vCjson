@@ -1,4 +1,6 @@
 # vCjson
+## Purpose
+**Lightweight and small library developed for parsing structure of a JSON document and easy data extraction.**
 ## Parsing
 After parsing the JSON document, JSON data is split into nodes. Each node is a data type according to https://www.json.org/ and can be an object, array, string, number, key-value pair, true, false, null.
 All nodes are arranged hierarchically according to the nesting depth.<br />
