@@ -112,7 +112,7 @@
     */
     int go_node_child();
 ```
-После применения метода курсор занимает позицию root текущего уровня и не указывает ни на один узел.<br />
+После применения метода, курсор занимает позицию root текущего уровня и не указывает ни на один узел.<br />
 Для перемещения по узлам текущего уровня используйте методы go_next_sibling, go_prev_sibling и get_sibling_num для определения количества узлов на этом уровне. Если на текущем уровне есть узел, являющийся родительским по отношению к другим узлам, то используйте тот же механизм перемещения. <br />
 
 Для возврата к родительскому узлу (курсор будет указывать на него) используется метод:
@@ -138,7 +138,7 @@
 ```
 Метод устанавливает курсор на первый по порядку узел имя которого передано по указателю. Поиск производится начиная с позиции root документа.<br />
   
-If the JSON document has multiple nodes with the same name at different nesting levels, you can move the cursor to the position of the parent node using go_node_name, go_next_sibling, go_prev_sibling, go_node_child, or go_node_parent, then move cursor to the child nodes of that node using go_node_child, and use the method:
+Если в документе JSON имеется несколько узлов с одинаковыми именами на разных уровнях вложенности, вы можете переместить указатель на позицию родительского узла используя go_node_name, go_next_sibling, go_prev_sibling, go_node_child или go_node_parent, далее перейти к дочерним узлам этого элемента используя go_node_child и использовать метод:
 ```cpp
     /** Moves cursor position to node that name specified if node exists on current level.
     * @param name - pointer to zero terminated c-string.
@@ -146,10 +146,10 @@ If the JSON document has multiple nodes with the same name at different nesting 
     */
     int go_node_name_on_layer(const char* name);
 ```
-It sets the cursor to the node passed by the pointer at the current nesting level.
+Метод устанавливает курсор на узел, имя которого передано по указателю, на текущем уровне вложенности.
 
-## Data extraction
-To get nodes names and their data value, use the following methods:
+## Извлечение данных
+Для получения информации о длине данных имени и значения узла, а также указателей на имя и значение используются методы:
 ```cpp
     /** Returns pointer to name of current node.
     * To get len of the name @use get_node_name_len().
@@ -176,7 +176,7 @@ To get nodes names and their data value, use the following methods:
     int get_node_value_len();
 ```
 
-The following methods can be used for comparison of node names or node data values when making decisions.
+Следующие методы можно применять для текущего сравнения данных имен или значений узлов при принятии решений или выводе.
 ```cpp
     /** Returns pointer to buff as zero terminated c-string contains value of current node.
     * @return pointer or nullptr if current node has no value.
@@ -189,9 +189,9 @@ The following methods can be used for comparison of node names or node data valu
     char* get_node_name_str();
 ```
 
-Be careful, each time you use the methods, the buffers will contain information about the values of the name and data of the current node.
+Будьте внимательны, при каждом использовании методов буферы будут содержать информацию о имени и значении текущего узла.
 
-To copy node name or node data value, use methods: 
+Для копирования имени или значения узла используются методы: 
 ```cpp
     /** Copy to buff name of current node.
     * @param buff - pointer to buff. Buffer size must be at least data size + 1 byte,
@@ -208,11 +208,11 @@ To copy node name or node data value, use methods:
     char* cp_node_value(char* buff);
 ```
 
-Be careful, the buffer size must be at least the data size + 1 byte. First use get_node_name_len or get_node_value_len to determine the size of the buffer.
+Будьте внимательны, размер буфера должен быть не менее размера данных + 1 байт. Сначала используйте get_node_name_len или get_node_value_len для определения размера буфера.
 
-## Show info
+## Вывод информации
 
-To show information about node, use methods:
+Для вывода информации об узлах в консоль используются методы:
 ```cpp
     /**Prints to console verbose information about node*/
     void show_node_info();
