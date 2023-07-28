@@ -21,6 +21,13 @@ Each node has the following properties:<br />
 To get the number of nodes in a JSON document, use the method:<br />
 >int get_num_nodes();
 
+To get type of current node, use method:
+> int get_node_type();
+
+To get type of node that name was specified, use method:
+> int get_node_type_by_name(const char* name);
+
+
 ## Navigate
 The library implements two mechanisms for moving through nodes:
 + Cursor;
@@ -28,14 +35,14 @@ The library implements two mechanisms for moving through nodes:
   
 ### Navigate with the cursor
 After parsing the JSON document, the cursor is in the root position and does not point to any node.<br />
-To get the number of nodes at the current level, you must use the method:
+To get the number of nodes at the current level, use the method:
 > int get_sibling_num();
 
 To move between nodes of the same level, use following methods:
 > int go_next_sibling();<br />
 > int go_prev_sibling();
 
-A node can be a parent of other nodes. To go to the child nodes of the current node (go down one level), you must use the method:
+A node can be a parent of other nodes. To go to the child nodes of the current node (go down one level), use the method:
 > int go_node_child();
 
 Attention! The cursor takes the root position and not point to any node of the current level.<br />
@@ -66,12 +73,14 @@ To get nodes names and their data value, use the following methods:
 > int get_node_value_len();
 
 
-The following methods can be used for ongoing comparison of node names or data when making decisions.
-get_node_value_str returns a c-string with the node data value;
-get_node_name_str returns a c-string with the node name value;
+The following methods can be used for comparison of node names or node data values when making decisions.
+> char* get_node_value_str();<br />
+> char* get_node_name_str();
+
 Be careful, each time you use the methods, the buffers will contain information about the values of the name and data of the current node.
 
-You can use ready-made methods to copy host name or data
-cp_node_value copies the node data value into the buffer passed by pointer,
-cp_node_name copies the value of the node name into the buffer passed by pointer,
+To copy node name or node data value, use methods: 
+> char* cp_node_name(char* buff);<br />
+> char* cp_node_value(char* buff);
+
 Be careful, the buffer size must be at least the data size + 1 byte. First use get_node_name_len or get_node_value_len to determine the size of the buffer.
