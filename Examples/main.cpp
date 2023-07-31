@@ -1,4 +1,5 @@
 #include <cstdio>
+#include <cstring>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -50,6 +51,70 @@ int main()
     }
     //Next we can output to console tree of JSON data
     showTree (&json);
+
+    //Lets return cursor to root
+    json.go_root();
+
+
+
+
+    //Lets output to console e-mails of each entity
+    printf("\nE-mail addresses:\n");
+
+    while (!json.go_next_sibling())
+    {
+        if (!json.go_node_child())
+        {
+            if (!json.go_node_name_on_layer("email"))
+            {
+                printf("\t%s\n", json.get_node_value_str());
+            }
+            json.go_node_parent();
+        }
+    }
+
+    //Lets return cursor to root
+    json.go_root();
+
+
+
+
+    //Lets output to console name of each entity if it has tag "ipsum"
+    printf("\nNames:\n");
+    char tag[] = "ipsum";
+    char buff[200]; //buff to store id
+    while (!json.go_next_sibling())
+    {
+        if (!json.go_node_child())
+        {
+            //Find "name"
+            if (!json.go_node_name_on_layer("name"))
+            {
+                json.cp_node_value(buff); // store name to buff;
+
+                //Find "tags"
+                if (!json.go_node_name_on_layer("tags"))
+                {
+                    if (!json.go_node_child())
+                    {
+                        while (!json.go_next_sibling())
+                        {
+                            if (!strncmp(json.get_node_value_ptr(), tag, strlen(tag))) //compare
+                            {
+                                printf("\t%s\n", buff);
+                                break;
+                            }
+                        }
+                        json.go_node_parent();
+                    }
+                }
+            }
+            json.go_node_parent();
+        }
+    }
+
+    json.~vCjson();
+
     return 0;
 }
 int showTree(vCjson* json, int lvl)
